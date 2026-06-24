@@ -83,8 +83,8 @@ def main(page: ft.Page):
             texto_variables_listas.value = f"Valores ingresados correctamente"
             
     #SUMA DE LAS PRIMERAS VARIABLES (PRUEBA)
-            resultado_final = formulas.SumaTotal(vl_input, f_input, fp_input)
-            page.add(ft.Text(value=f"Suma: {resultado_final}"))
+            #resultado_final = formulas.SumaTotal(vl_input, f_input, fp_input)
+            #page.add(ft.Text(value=f"Suma: {resultado_final}"))
             
             
             page.update()
@@ -100,7 +100,7 @@ def main(page: ft.Page):
     texto_variables_listas = ft.Text(value="Esperando cálculo...", size=14)
     page.add(texto_variables_listas)
 
-    boton_calcular = ft.Button(content="Calcular", on_click=calcular_sistema, width=100)
+    boton_calcular = ft.Button(content="Calcular", on_click=calcular_sistema, width=120)
     page.add(boton_calcular)
     
 ft.run(main)
