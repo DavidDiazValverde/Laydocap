@@ -1,9 +1,26 @@
 import flet as ft
 import formulas
+import os
+import asyncio
 
+async def logo(page: ft.Page):
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    
+    logo_img = ft.Image(src="logo.png", height=page.height)
+    page.add(logo_img)
+    page.update()                                                                                                                              
+    await asyncio.sleep(1)                                                    
+    page.controls.clear()   
+    main(page)  # Llama a la función main para mostrar la interfaz principal                                                  
+    page.update()
+   
+    
 def main(page: ft.Page):
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.title = "Parámetros del Sistema"
-    #--------------------V_L-----------------------------
+    #--------------------V_L--------pod---------------------
     texto_V_L = ft.Text(value="Nivel de tensión del sistema (tensión de línea)")
     V_L = ft.TextField(label="Escribe algo aquí")
     
@@ -51,7 +68,7 @@ def main(page: ft.Page):
 
     B_estrella = ft.Button(content="Estrella", on_click=click_estrella, width=100)
     B_Delta = ft.Button(content="Delta", on_click=click_delta, width=100)
-    fila_de_botones = ft.Row( controls=[B_estrella, B_Delta])
+    fila_de_botones = ft.Row( controls=[B_estrella, B_Delta],alignment=ft.MainAxisAlignment.CENTER)
     
     page.add(texto_Banc_Cap,fila_de_botones)
     
@@ -59,7 +76,7 @@ def main(page: ft.Page):
     page.add(Geometria)
     #------------------------Variables Finales-----------------
     
-    def calcular_sistema(e):
+    async def calcular_sistema(e):
         try:
             # EXTRAEMOS Y CONVERTIMOS A LAS VARIABLES QUE USARÁS EN TUS FÓRMULAS:
             vl_input = float(V_L.value)
@@ -82,15 +99,13 @@ def main(page: ft.Page):
             texto_variables_listas.color = "green"
             texto_variables_listas.value = f"Valores ingresados correctamente"
             
-    #SUMA DE LAS PRIMERAS VARIABLES (PRUEBA)
-            #resultado_final = formulas.SumaTotal(vl_input, f_input, fp_input)
-            #page.add(ft.Text(value=f"Suma: {resultado_final}"))
-            
-            
+            page.update()
+            await asyncio.sleep(1)                                                    
+            page.controls.clear()   
+            resultados(page)  # Llama a la función main para mostrar la interfaz principal                                                  
             page.update()
             
             
-        
         except ValueError:
             # Atrapa errores si el usuario mete letras en los TextField numéricos
             texto_variables_listas.value = "Ingrese valores numéricos válidos para el Voltaje de línea, Frecuencia y Factor de potencia."
@@ -102,10 +117,16 @@ def main(page: ft.Page):
 
     boton_calcular = ft.Button(content="Calcular", on_click=calcular_sistema, width=120)
     page.add(boton_calcular)
-    
-ft.run(main)
-    
+
+def resultados (page: ft.Page):
+    page.title = "Resultados del Sistema"
+    #SUMA DE LAS PRIMERAS VARIABLES (PRUEBA)
+    #resultado_final = formulas.SumaTotal(vl_input, f_input, fp_input)
+    #page.add(ft.Text(value=f"Suma: {resultado_final}"))
+    page.add(ft.Text(value="Resultados del sistema calculados aquí."))
 
 
-
+if __name__ == "__main__":
+    carpeta_recursos = os.path.dirname(__file__)
+    ft.app(target=logo, assets_dir=carpeta_recursos)
     
