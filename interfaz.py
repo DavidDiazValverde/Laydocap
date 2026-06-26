@@ -44,11 +44,9 @@ async def main(page: ft.Page):
 
         error_VL.update()
 
-    texto_VL = ft.Text(value="Tensión de línea (V)")
+    texto_VL = ft.Text(value="Tensión de línea (V)", size=20)
     error_VL = ft.Text(value="")
     VL = ft.TextField(label="Escribe algo aquí",on_blur=validar_tension, data=0)
-
-    page.add(texto_VL, VL, error_VL)
 
     #---------------------F------------------------------
     
@@ -72,12 +70,10 @@ async def main(page: ft.Page):
 
         error_F.update()
 
-    texto_F = ft.Text(value="Frecuencia del sistema (Hz)")
+    texto_F = ft.Text(value="Frecuencia del sistema (Hz)", size=20)
     F = ft.TextField(label="Escribe algo aquí",on_blur=validar_frecuencia, data=0)
     error_F = ft.Text(value="")
 
-    page.add(texto_F, F, error_F)
-    
     #---------------------F_p-----------------------------
         
     def validar_fp(e):
@@ -100,15 +96,13 @@ async def main(page: ft.Page):
 
         error_fp.update()
 
-    texto_fp = ft.Text(value="Factor de potencia deseado")
+    texto_fp = ft.Text(value="Factor de potencia deseado", size=20)
     fp = ft.TextField(label="Escribe algo aquí",on_blur=validar_fp, data=0)
     error_fp = ft.Text(value="")
 
-    page.add(texto_fp, fp, error_fp)
-
     #---------------------Banc_Cap-----------------------------
     
-    texto_Banc_Cap = ft.Text(value="Que geometria de banco de capacitores deseas")
+    texto_Banc_Cap = ft.Text(value="Geometria del banco", size=20)
     
     def click_estrella(e):
         B_estrella.disabled = True
@@ -136,18 +130,61 @@ async def main(page: ft.Page):
         
     B_estrella = ft.Button(content=ft.Text("Estrella"), on_click=click_estrella, width=100)
     B_Delta = ft.Button(content=ft.Text("Delta"), on_click=click_delta, width=100)
-    fila_de_botones = ft.Row(controls=[B_estrella, B_Delta], alignment=ft.MainAxisAlignment.CENTER)
-    
-    page.add(texto_Banc_Cap, fila_de_botones)
+    fila_de_botones = ft.Row(controls=[B_estrella, B_Delta], alignment=ft.MainAxisAlignment.CENTER, spacing=10)
     
     Geometria = ft.Text(value="Seleccionaste: " + verificacion_geometria())
-    page.add(Geometria)
+
+# ------- Agrupación de elementos VL, F, fp y geometria -----------
+    
+    fila_superior = ft.Row(
+        controls=[
+            ft.Column(
+                controls=[texto_VL, VL, error_VL],
+                spacing=5,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            ft.Column(
+                controls=[texto_F, F, error_F],
+                spacing=5,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+        spacing=40,
+        wrap=True,
+    )
+
+    fila_inferior = ft.Row(
+        controls=[
+            ft.Column(
+                controls=[texto_fp, fp, error_fp],
+                spacing=5,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                width=300,
+            ),
+            ft.Column(
+                controls=[
+                    texto_Banc_Cap,
+                    fila_de_botones,
+                    Geometria,
+                ],
+                spacing=5,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                width=300,
+            ),
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+        spacing=40,
+        wrap=True,
+    )
+
+    # Agregamos las dos filas
+    page.add(fila_superior, fila_inferior)
 
 #--------------------------Cargas-----------------------------
     lista_cargas_datos = []
     await crear_seccion_cargas(page, lista_cargas_datos)
     page.update()
-
 
 #-----------------------Boton calcular-----------------
 
