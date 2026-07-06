@@ -12,7 +12,6 @@ Aplicación de escritorio desarrollada con Python y Flet para calcular compensac
 ├── formulas.py           # Cálculos eléctricos
 ├── tabla_cargas.py       # Componente para agregar cargas
 ├── logo.png              # Imagen de bienvenida
-├── pruebas.ipynb         # Notebook de pruebas
 ├── README.md             # Este archivo
 ```
 
@@ -24,13 +23,17 @@ Aplicación de escritorio desarrollada con Python y Flet para calcular compensac
 - Flet 0.85.3 o superior
 - NumPy 1.24.0 o superior
 
-```bash
-pip install flet numpy
-```
-
----
 
 ## 🚀 Instalación y ejecución
+
+# Forma 1 (mas sencilla)
+``
+1.Entra al repositorio https://github.com/DavidDiazValverde/Proyecto-Circuitos
+2.Ve a la seccion de releases y selecciona la version mas nueva
+3.Seleccion el archivo Laydocap.exe y descargalo
+4.Disfruta de la aplicación
+
+# Forma 2 (más extensa, en caso de que la forma 1 falle)
 
 ```bash
 # Clonar el repositorio
@@ -46,6 +49,10 @@ pip install flet numpy
 
 # Ejecutar
 python main.py
+
+#o si quieres creer el .exe
+pip install pyinstaller
+pyinstaller --onefile --noconsole --name="Leydocap" --add-data "logo.png;." main.py
 ```
 
 ---
