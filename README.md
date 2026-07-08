@@ -93,7 +93,7 @@ Desde esta pantalla puede volver a la vista principal para realizar una nueva si
 ## 📝 Notas
 
 - Los valores de P, Q y S deben ser positivos. El FP debe estar entre 0 y 1.
-- Probado en Linux, Windows y macOS.
+- Probado en Linux y Windows.
 - Los cálculos utilizan NumPy, por lo que el rendimiento se mantiene incluso con muchas cargas.
 - Para cambiar el logo, reemplace el archivo `logo.png` por otro con el mismo nombre y formato.
 
