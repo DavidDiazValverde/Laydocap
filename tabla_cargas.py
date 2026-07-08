@@ -46,6 +46,7 @@ async def crear_seccion_cargas(page: ft.Page, lista_cargas_datos: list):
         columns=[
             ft.DataColumn(ft.Text("ID Carga", weight=ft.FontWeight.BOLD)),
             ft.DataColumn(ft.Text("Parámetros Ingresados", weight=ft.FontWeight.BOLD)),
+            ft.DataColumn(ft.Text("Acción", weight=ft.FontWeight.BOLD))
         ],
         rows=[],
     )
@@ -70,12 +71,39 @@ async def crear_seccion_cargas(page: ft.Page, lista_cargas_datos: list):
             val2 = float(input_val2.value)
 
             error_carga.value = "" 
+
+            nombre_carga = nombre  # Guardamos el nombre en una variable separada
             lista_cargas_datos.append({"nombre": nombre, p1.lower(): val1, p2.lower(): val2})
+
+
+            def eliminar_carga(e, nombre_carga=nombre_carga):
+                # Eliminar de la lista de datos por nombre
+                for i, carga in enumerate(lista_cargas_datos):
+                    if carga.get("nombre") == nombre_carga:
+                        lista_cargas_datos.pop(i)
+                        break
+    
+                # Eliminar la fila de la tabla por nombre
+                for i, row in enumerate(tabla_cargas.rows):
+                    if row.cells[0].content.value == nombre_carga:
+                        tabla_cargas.rows.pop(i)
+                        break
+    
+                page.update()
+
+            btn_eliminar = ft.Button(
+                content=ft.Text("✕", color="red", size=20, weight=ft.FontWeight.BOLD),
+                tooltip="Eliminar carga",
+                on_click=eliminar_carga,
+                width=100,
+                height=40,
+            )
 
             tabla_cargas.rows.append(
                 ft.DataRow(cells=[
                     ft.DataCell(ft.Text(nombre, weight=ft.FontWeight.W_500)),
                     ft.DataCell(ft.Text(f"{p1}={val1} | {p2}={val2}")),
+                    ft.DataCell(btn_eliminar),
                 ])
             )
 
@@ -90,7 +118,7 @@ async def crear_seccion_cargas(page: ft.Page, lista_cargas_datos: list):
             error_carga.value = "Valores numéricos inválidos."
             page.update()
 
-    # CORRECCIÓN: Usando el nuevo estándar ft.Button sin advertencias
+    
     btn_agregar_carga = ft.Button(
         content=ft.Text("Añadir Carga"), 
         on_click=agregar_carga_a_tabla, 
