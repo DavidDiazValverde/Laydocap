@@ -90,25 +90,6 @@ Desde esta pantalla puede volver a la vista principal para realizar una nueva si
 
 ---
 
-## 🛠️ Crear un ejecutable (.exe)
-
-Si desea distribuir la aplicación como un archivo .exe para Windows (sin necesidad de que el usuario tenga Python instalado), puede usar PyInstaller:
-
-```bash
-pip install pyinstaller
-pyinstaller --onefile main.py
-```
-
-Esto genera un único .exe en la carpeta `dist/`. Para ocultar la ventana de terminal al ejecutarlo:
-
-```bash
-pyinstaller --onefile --noconsole main.py
-```
-
-El ejecutable incluye Python y todas las librerías necesarias, por lo que funciona en cualquier equipo Windows sin instalación previa.
-
----
-
 ## 📝 Notas
 
 - Los valores de P, Q y S deben ser positivos. El FP debe estar entre 0 y 1.
@@ -124,4 +105,4 @@ Esta aplicación surgió como una herramienta para agilizar los cálculos de com
 
 ---
 
-Desarrollado por **Santiago Gómez Ramírez, David Díaz Valverde y Luca Fernández Diaz** como parte de un proyecto.
+Desarrollado por **Santiago Gómez Ramírez, David Díaz Valverde y Luca Fernández Diaz** como parte de un proyecto de Ingeniería Eléctrica en la Universidad de Costa Rica.
