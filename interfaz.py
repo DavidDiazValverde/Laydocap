@@ -275,7 +275,7 @@ def resultados(page: ft.Page, datos_sistema: dict):
             ft.Text("⚠️ El sistema requiere corrección de factor de potencia.", color="red", weight=ft.FontWeight.BOLD),
             ft.Text(f"FP Deseado: {datos_sistema['fp_deseado']}"),
             ft.Text(f"Potencia Reactiva a Inyectar (Qc): {datos_sistema['Qc']:.2f} VAR"),
-            ft.Text(f"Capacitancia Requerida por fase: {datos_sistema['capacitancia_fase'] * 1e6:.2f} µF")
+            ft.Text(f"Capacitancia Requerida por fase: {datos_sistema['capacitancia_fase'] * 1e6:.6f} µF")
         ])
     else:
         contenido_compensacion.append(
